@@ -1,6 +1,7 @@
 package com.otherworld.owrp.commands;
 
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.utils.ChatColorUtil;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -26,7 +27,10 @@ public class DoCommand implements CommandExecutor {
 
         // Check weather content arguments are present
         if (args.length == 0) {
-            sender.sendMessage("Текст не был найден");
+            sender.sendMessage(
+                    ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Color.error"))
+                    + "Текст сообщения не был найден"
+            );
             return true;
         }
 
@@ -37,7 +41,15 @@ public class DoCommand implements CommandExecutor {
         for (Player addressee : addressees)
         {
             // <content> (<player>)
-            addressee.sendMessage(ChatColor.GRAY + content + " " + ChatColor.AQUA + "(" + player.getDisplayName() + ")");
+            addressee.sendMessage(
+                    ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Color.content"))
+                    + content
+                    + " "
+                    + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Color.nickname"))
+                    + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Brackets.open"))
+                    + player.getDisplayName()
+                    + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Brackets.close"))
+            );
         }
 
         return true;

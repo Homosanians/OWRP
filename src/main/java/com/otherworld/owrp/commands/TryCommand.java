@@ -1,6 +1,7 @@
 package com.otherworld.owrp.commands;
 
         import com.otherworld.owrp.OWRP;
+        import com.otherworld.owrp.utils.ChatColorUtil;
         import com.otherworld.owrp.utils.PlayerUtil;
         import org.bukkit.ChatColor;
         import org.bukkit.command.Command;
@@ -26,7 +27,10 @@ public class TryCommand implements CommandExecutor {
 
         // Check weather content arguments are present
         if (args.length == 0) {
-            sender.sendMessage("Текст сообщения не был найден");
+            sender.sendMessage(
+                    ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.error"))
+                    + "Текст сообщения не был найден"
+            );
             return true;
         }
 
@@ -39,11 +43,29 @@ public class TryCommand implements CommandExecutor {
         {
             if (successfulBet) {
                 // <nick> <content> [Удачно]
-                addressee.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GRAY + " " + content + " " + ChatColor.GREEN + "| Удачно");
+                addressee.sendMessage(
+                        ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.nickname"))
+                        + player.getDisplayName()
+                        + ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.content"))
+                        + " "
+                        + content
+                        + " "
+                        + ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.good"))
+                        + plugin.getConfig().getString("Try.Message.good")
+                );
             }
             else {
                 // <nick> <content> [Неудачно]
-                addressee.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GRAY + " " + content + " " + ChatColor.RED + "| Неудачно");
+                addressee.sendMessage(
+                        ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.nickname"))
+                        + player.getDisplayName()
+                        + ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.content"))
+                        + " "
+                        + content
+                        + " "
+                        + ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.bad"))
+                        + plugin.getConfig().getString("Try.Message.bad")
+                );
             }
         }
 

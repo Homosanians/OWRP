@@ -4,18 +4,30 @@ version: 1
 chatRadius: 100
 
 Me:
-  nickname: "AQUA"
-  content: "GRAY"
-  error: "RED"
+  Color:
+    nickname: "AQUA"
+    content: "GRAY"
+    error: "RED"
+  Message:
+    prefix: "* "
 
 Do:
-  nickname: "AQUA"
-  content: "GRAY"
-  error: "RED"
+  Color:
+    nickname: "AQUA"
+    content: "GRAY"
+    error: "RED"
+  Message:
+    Brackets:
+      open: "("
+      close: ")"
 
 Try:
-  nickname: "AQUA"
-  content: "GRAY"
-  error: "RED"
-  good: "GREEN"
-  bad: "RED"
+  Color:
+    nickname: "AQUA"
+    content: "GRAY"
+    error: "RED"
+    good: "GREEN"
+    bad: "RED"
+  Message:
+    good: "| Удачно"
+    bad: "| Неудачно"
