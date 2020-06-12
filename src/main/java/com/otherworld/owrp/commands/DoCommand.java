@@ -20,7 +20,7 @@ public class DoCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         // Completes execution of the command if it is not sent by a player.
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Пошёл ты нахуй со своей консолью мудила блять гороховое");
+            sender.sendMessage("Сообщения из консоли не принимаются");
             return true;
         }
 

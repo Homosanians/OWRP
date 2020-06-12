@@ -22,9 +22,5 @@ commands:
     description: Do command
     permission: owrp.do
     usage: /<command>
-  todo:
-    description: Todo command
-    permission: owrp.todo
-    usage: /<command>
 
 permissions: {}
