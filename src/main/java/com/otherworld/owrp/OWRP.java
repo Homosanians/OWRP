@@ -14,6 +14,7 @@ public final class OWRP extends JavaPlugin {
 
         getCommand("me").setExecutor(new MeCommand(this));
         getCommand("do").setExecutor(new DoCommand(this));
+        getCommand("try").setExecutor(new TryCommand(this));
     }
 
     @Override
