@@ -1,6 +1,7 @@
 package com.otherworld.owrp.commands;
 
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.utils.ChatColorUtil;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.plugin.Plugin;
 import java.util.List;
@@ -19,28 +20,39 @@ public class MeCommand implements CommandExecutor {
         this.plugin = plugin;
     }
 
-    public boolean onCommand(CommandSender player, Command cmd, String label, String[] args) {
-        System.out.println(player);
-        if (!(player instanceof Player)) {
-            player.sendMessage("\u043f\u0438\u0437\u0434\u0435\u0446");
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        // Completes execution of the command if it is not sent by a player.
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("Сообщения из консоли не принимаются");
             return true;
         }
-        final Player pl = (Player)player;
+
+        // Check weather content arguments are present
         if (args.length == 0) {
-            pl.sendMessage(ChatColor.RED + "\u041d\u0435\u0442 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f");
+            sender.sendMessage(
+                    ChatColorUtil.getChatColor(plugin.getConfig().getString("Me.Color.error"))
+                    + "Текст сообщения не был найден"
+            );
             return true;
         }
-        final List<Player> wiwiw = PlayerUtil.getPlayersWithin(pl, plugin.getConfig().getInt("chatRadius"));
-        final StringBuilder sb = new StringBuilder();
-        for (final String word : args) {
-            sb.append(word);
-            sb.append(" ");
+
+        Player player = (Player) sender;
+        List<Player> addressees = PlayerUtil.getPlayersWithin(player, plugin.getConfig().getInt("chatRadius"));
+        String content = String.join(" ", args);
+
+        for (Player addressee : addressees)
+        {
+            // <content> (<player>)
+            addressee.sendMessage(
+                    ChatColorUtil.getChatColor(plugin.getConfig().getString("Me.Color.nickname"))
+                    + plugin.getConfig().getString("Me.Message.prefix")
+                    + player.getDisplayName()
+                    + ChatColorUtil.getChatColor(plugin.getConfig().getString("Me.Color.content"))
+                    + " "
+                    + content
+            );
         }
-        final Plugin chatty = Bukkit.getServer().getPluginManager().getPlugin("Chatty");
-        final File chattyignore = new File(chatty.getDataFolder() + File.separator + "storage.json");
-        for (final Player playerr : wiwiw) {
-            playerr.sendMessage(ChatColor.AQUA + "* " + pl.getDisplayName() + ChatColor.GRAY + " " + sb.toString().trim());
-        }
+
         return true;
     }
 }
