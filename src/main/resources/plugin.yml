@@ -8,7 +8,7 @@ description: Roleplay chat commands
 website: http://otherworldmc.ru
 
 commands:
-  reload:
+  owrp:
     description: Reloads plugin
     permission: owrp.reload
     usage: /<command>
