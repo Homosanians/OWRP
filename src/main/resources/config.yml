@@ -3,9 +3,19 @@ version: 1
 
 chatRadius: 100
 
-Colors:
-  common: "AQUA"
-  me: "AQUA"
-  try: "AQUA"
-  do: "AQUA"
-  todo: "AQUA"
+Me:
+  nickname: "AQUA"
+  content: "GRAY"
+  error: "RED"
+
+Do:
+  nickname: "AQUA"
+  content: "GRAY"
+  error: "RED"
+
+Try:
+  nickname: "AQUA"
+  content: "GRAY"
+  error: "RED"
+  good: "GREEN"
+  bad: "RED"
