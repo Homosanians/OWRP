@@ -6,3 +6,25 @@ prefix: OW
 authors: [homosanians]
 description: Roleplay chat commands
 website: http://otherworldmc.ru
+
+depend:
+  - Chatty
+commands:
+  me:
+    description: Me command
+    permission: owrp.me
+    usage: /<command>
+  try:
+    description: Try command
+    permission: owrp.try
+    usage: /<command>
+  do:
+    description: Do command
+    permission: owrp.do
+    usage: /<command>
+  todo:
+    description: Todo command
+    permission: owrp.todo
+    usage: /<command>
+
+permissions: {}

@@ -1,0 +1,11 @@
+# Do not change it
+version: 1
+
+chatRadius: 100
+
+Colors:
+  common: "AQUA"
+  me: "AQUA"
+  try: "AQUA"
+  do: "AQUA"
+  todo: "AQUA"
