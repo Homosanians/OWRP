@@ -7,20 +7,28 @@ authors: [homosanians]
 description: Roleplay chat commands
 website: http://otherworldmc.ru
 
-depend:
-  - Chatty
 commands:
+  reload:
+    description: Reloads plugin
+    permission: owrp.reload
+    usage: /<command>
   me:
-    description: Me command
+    description: Me command performs first-person action
     permission: owrp.me
-    usage: /<command>
+    usage: /<command> message
   try:
-    description: Try command
+    description: Try command performs first-person action with 50 percent probability
     permission: owrp.try
-    usage: /<command>
+    usage: /<command> message
   do:
-    description: Do command
+    description: Do command performs third-person action
     permission: owrp.do
-    usage: /<command>
+    usage: /<command> message
 
-permissions: {}
+permissions:
+  owrp.me:
+    default: true
+  owrp.try:
+    default: true
+  owrp.do:
+    default: true

@@ -21,6 +21,8 @@ public final class OWRP extends JavaPlugin {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
 
+        getCommand("owrp").setExecutor(new ReloadCommand(this));
+
         getCommand("me").setExecutor(new MeCommand(this));
         getCommand("do").setExecutor(new DoCommand(this));
         getCommand("try").setExecutor(new TryCommand(this));
@@ -45,10 +47,12 @@ public final class OWRP extends JavaPlugin {
         Integer loadedVersion = getConfig().getInt("version");
 
         if (actualVersion > loadedVersion) {
-            System.out.println("==============================");
-            System.out.println("              OWRP            ");
+            System.out.println();
+            System.out.println("-------------[OWRP]-----------");
             System.out.println("         Config outdated      ");
-            System.out.println("==============================");
+            System.out.println("         Plugin may crash     ");
+            System.out.println("------------------------------");
+            System.out.println();
         }
     }
 }
