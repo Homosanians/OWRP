@@ -14,7 +14,7 @@ public final class OWRP extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        System.out.println("Deobfuscation, modification, transfer, storage, use of the plugin is prohibited to anyone except Other World and it's authorized third-parties. You are have agreed with these conditions from the moment you begin storage or use. Copyright Other World 2020 Alexander Emelyanov. Contact: contact.emelyanov@gmail.com");
+        System.out.println("Deobfuscation, modification, transfer, storage, use of OWRP plugin is prohibited to anyone except Other World and it's authorized third-parties. You are have agreed with these conditions from the moment you begin storage or use. If you are not an authorized person, delete the plugin and it's files immediately. Copyright Other World 2020 Alexander Emelyanov. Contact: contact.emelyanov@gmail.com");
 
         checkConfigVersions();
 
