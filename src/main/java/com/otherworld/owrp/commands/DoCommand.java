@@ -27,6 +27,7 @@ public class DoCommand implements CommandExecutor {
         // Check weather content arguments are present
         if (args.length == 0) {
             sender.sendMessage("Текст не был найден");
+            return true;
         }
 
         Player player = (Player) sender;

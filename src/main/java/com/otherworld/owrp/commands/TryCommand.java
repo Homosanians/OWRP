@@ -27,6 +27,7 @@ public class TryCommand implements CommandExecutor {
         // Check weather content arguments are present
         if (args.length == 0) {
             sender.sendMessage("Текст не был найден");
+            return true;
         }
 
         Player player = (Player) sender;
@@ -38,11 +39,11 @@ public class TryCommand implements CommandExecutor {
         {
             if (successfulBet) {
                 // <nick> <content> [Удачно]
-                addressee.sendMessage(ChatColor.AQUA + player.getDisplayName() + " " + ChatColor.GRAY + " " + content + " " + ChatColor.GREEN + "| Удачно");
+                addressee.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GRAY + " " + content + " " + ChatColor.GREEN + "| Удачно");
             }
             else {
                 // <nick> <content> [Неудачно]
-                addressee.sendMessage(ChatColor.AQUA + player.getDisplayName() + " " + ChatColor.GRAY + " " + content + " " + ChatColor.RED + "| Неудачно");
+                addressee.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GRAY + " " + content + " " + ChatColor.RED + "| Неудачно");
             }
         }
 
