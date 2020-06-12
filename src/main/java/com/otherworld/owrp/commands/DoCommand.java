@@ -46,9 +46,9 @@ public class DoCommand implements CommandExecutor {
                     + content
                     + " "
                     + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Color.nickname"))
-                    + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Brackets.open"))
+                    + plugin.getConfig().getString("Do.Message.Brackets.open")
                     + player.getDisplayName()
-                    + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Brackets.close"))
+                    + plugin.getConfig().getString("Do.Message.Brackets.close")
             );
         }
 
