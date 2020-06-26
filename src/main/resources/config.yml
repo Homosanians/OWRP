@@ -1,5 +1,5 @@
 # Do not change it
-version: 1
+version: 2
 
 chatRadius: 100
 
@@ -17,6 +17,7 @@ Do:
     content: "GRAY"
     error: "RED"
   Message:
+    prefix: "* "
     Brackets:
       open: "("
       close: ")"
@@ -29,5 +30,6 @@ Try:
     good: "GREEN"
     bad: "RED"
   Message:
+    prefix: "* "
     good: "| Удачно"
     bad: "| Неудачно"
