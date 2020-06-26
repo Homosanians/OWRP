@@ -43,6 +43,7 @@ public class DoCommand implements CommandExecutor {
             // <content> (<player>)
             addressee.sendMessage(
                     ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Color.content"))
+                    + plugin.getConfig().getString("Do.Message.prefix")
                     + content
                     + " "
                     + ChatColorUtil.getChatColor(plugin.getConfig().getString("Do.Color.nickname"))
