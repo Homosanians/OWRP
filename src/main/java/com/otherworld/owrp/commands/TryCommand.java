@@ -45,6 +45,7 @@ public class TryCommand implements CommandExecutor {
                 // <nick> <content> [Удачно]
                 addressee.sendMessage(
                         ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.nickname"))
+                        + plugin.getConfig().getString("Try.Message.prefix")
                         + player.getDisplayName()
                         + ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.content"))
                         + " "
@@ -58,6 +59,7 @@ public class TryCommand implements CommandExecutor {
                 // <nick> <content> [Неудачно]
                 addressee.sendMessage(
                         ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.nickname"))
+                        + plugin.getConfig().getString("Try.Message.prefix")
                         + player.getDisplayName()
                         + ChatColorUtil.getChatColor(plugin.getConfig().getString("Try.Color.content"))
                         + " "
