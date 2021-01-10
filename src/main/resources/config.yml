@@ -1,35 +1,57 @@
-# Do not change it
-version: 2
+# Radius
+# -2 - all worlds, -1 world of the sender, 0 - none, >1 - normal
+# messagesOutputMode. Two types: consistent, random.
 
-chatRadius: 100
+configVersion: 3
 
-Me:
-  Color:
-    nickname: "AQUA"
-    content: "GRAY"
-    error: "RED"
-  Message:
-    prefix: "* "
+Expressions:
+  ): "улыбается"
+  )): "смеется"
+  (: "грустит"
+  ((: "сильно грустит"
+  :D: "катается по полу от смеха"
 
-Do:
-  Color:
-    nickname: "AQUA"
-    content: "GRAY"
-    error: "RED"
-  Message:
-    prefix: "* "
-    Brackets:
-      open: "("
-      close: ")"
+Commands:
+  me:
+    enabled: true
+    messages:
+      1: "{message}"
+    messagesOutputMode: "consistent"
+    radius: 100
+    permission: "default"
+  do:
+    enabled: true
+    messages:
+      1: "{message}"
+    messagesOutputMode: "consistent"
+    radius: 100
+    permission: "default"
+  todo:
+    enabled: true
+    messages:
+      1: "{message}"
+    messagesOutputMode: "consistent"
+    radius: 100
+    permission: "default"
+  try:
+    enabled: true
+    messages:
+      1: "{message}"
+      2: "{message}"
+    messagesOutputMode: "random"
+    radius: 100
+    permission: "default"
+  a:
+    enabled: true
+    messages:
+      1: "{message}"
+    messagesOutputMode: "consistent"
+    radius: -2
+    permission: "default"
 
-Try:
-  Color:
-    nickname: "AQUA"
-    content: "GRAY"
-    error: "RED"
-    good: "GREEN"
-    bad: "RED"
-  Message:
-    prefix: "* "
-    good: "| Удачно"
-    bad: "| Неудачно"
+Strings:
+  noPrivilege: "У вас нет привелегий для выполнения этой команды"
+  errorOccurred: "Произошла ошибка"
+  noConsole: "Сообщений из консоли не принимаются"
+  noArgs: "Вы не ввели текст сообщения"
+  pluginReload: "Плагин перезапущен"

@@ -1,14 +1,17 @@
 package com.otherworld.owrp;
 
 import com.otherworld.owrp.commands.*;
-import org.bukkit.command.CommandExecutor;
+import com.otherworld.owrp.handlers.CommandsHandler;
+import com.otherworld.owrp.listeners.ExpressionsChatListener;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 
 public final class OWRP extends JavaPlugin {
     @Override
@@ -23,9 +26,10 @@ public final class OWRP extends JavaPlugin {
 
         getCommand("owrp").setExecutor(new ReloadCommand(this));
 
-        getCommand("me").setExecutor(new MeCommand(this));
-        getCommand("do").setExecutor(new DoCommand(this));
-        getCommand("try").setExecutor(new TryCommand(this));
+        new MyCommand(this);
+        //new CommandsHandler(this).registerCommands();
+
+        Bukkit.getPluginManager().registerEvents(new ExpressionsChatListener(this), this);
     }
 
     @Override
@@ -43,8 +47,8 @@ public final class OWRP extends JavaPlugin {
             defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
         }
 
-        Integer actualVersion = defaultConfig.getInt("version");
-        Integer loadedVersion = getConfig().getInt("version");
+        Integer actualVersion = defaultConfig.getInt("configVersion");
+        Integer loadedVersion = getConfig().getInt("configVersion");
 
         if (actualVersion > loadedVersion) {
             System.out.println();

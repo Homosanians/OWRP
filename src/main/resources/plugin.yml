@@ -12,23 +12,3 @@ commands:
     description: Reloads plugin
     permission: owrp.reload
     usage: /<command>
-  me:
-    description: Me command performs first-person action
-    permission: owrp.me
-    usage: /<command> message
-  try:
-    description: Try command performs first-person action with 50 percent probability
-    permission: owrp.try
-    usage: /<command> message
-  do:
-    description: Do command performs third-person action
-    permission: owrp.do
-    usage: /<command> message
-
-permissions:
-  owrp.me:
-    default: true
-  owrp.try:
-    default: true
-  owrp.do:
-    default: true
