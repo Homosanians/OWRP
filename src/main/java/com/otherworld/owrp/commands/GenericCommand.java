@@ -21,8 +21,9 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         super(plugin, commandArgs.commandName);
 
         setUsage(commandArgs.commandUsage);
-        setPermission(commandArgs.commandPermission);
-        setPermissionMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noPrivilege")));
+
+        //setPermission(commandArgs.commandPermission);
+        //setPermissionMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noPrivilege")));
 
         registerCommand();
 
@@ -58,7 +59,8 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         Player player = (Player) sender;
         List<Player> addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
         String content = commandArgs.message
-                .replace("{player}", ((Player) sender).getDisplayName())
+                .replace("{playerName}", sender.getName())
+                .replace("{playerDisplayName}", ((Player) sender).getDisplayName())
                 .replace("{message}", args[0]);
 
         for (Player addressee : addressees)

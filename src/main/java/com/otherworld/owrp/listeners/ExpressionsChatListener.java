@@ -20,7 +20,5 @@ public class ExpressionsChatListener implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         emoteHandler.handle(event);
-
-        event.setCancelled(true);
     }
 }

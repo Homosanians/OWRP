@@ -26,7 +26,7 @@ public final class OWRP extends JavaPlugin {
 
         new CommandsHandler(this).registerCommands();
 
-        Bukkit.getPluginManager().registerEvents(new ExpressionsChatListener(this), this);
+        // todo Bukkit.getPluginManager().registerEvents(new ExpressionsChatListener(this), this);
     }
 
     @Override

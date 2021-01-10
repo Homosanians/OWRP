@@ -1,9 +1,12 @@
 package com.otherworld.owrp.handlers;
 
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ExpressionsHandler {
@@ -12,19 +15,22 @@ public class ExpressionsHandler {
 
     public ExpressionsHandler(OWRP plugin) {
         this.plugin = plugin;
-        this.expressions = plugin.getConfig().getConfigurationSection("Expressions");
+        this.expressions = plugin.getConfig().getConfigurationSection("Expressions.list");
     }
 
     public void handle(AsyncPlayerChatEvent event) {
-        // command : message
-        System.out.println(event.getMessage());
         for (String expression : expressions.getKeys(false)) {
-            System.out.println(expression);
-            System.out.println(expressions.getString(expression));
-            if (event.getMessage().equals(expression)) {
-                event.setMessage(Objects.requireNonNull(expressions.getString(expression)));
+            if (event.getMessage().trim().equals(expression.trim())) {
+                List<Player> addressees = PlayerUtil.getPlayersWithin(event.getPlayer(), plugin.getConfig().getInt("Expressions.chatRadius"));
+                String message = Objects.requireNonNull(plugin.getConfig().getString("Expressions.message"))
+                        .replace("{player}", event.getPlayer().getDisplayName())
+                        .replace("{message}", Objects.requireNonNull(expressions.getString(expression)));
+                for (Player addressee : addressees)
+                {
+                    addressee.sendMessage(message);
+                }
+                event.setCancelled(true);
             }
         }
-        event.setMessage("хуй");
     }
 }

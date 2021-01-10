@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommandsHandler {
     private final OWRP plugin;
+    private final Random generator = new Random(); // todo генерит одинаковые
 
     public CommandsHandler(OWRP plugin) {
         this.plugin = plugin;
@@ -20,7 +21,7 @@ public class CommandsHandler {
         AtomicInteger commandsRegistered = new AtomicInteger();
 
         ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
-
+        System.out.println(commands.getKeys(true).size());
         for(String commandName:commands.getKeys(false)){
             System.out.println(commandName);
 
@@ -38,7 +39,7 @@ public class CommandsHandler {
                 if (commandMessagesOutputMode.equals("random")) {
                     commandArgs = new GenericCommandArgs(commandName,
                             String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(
-                                    new Random().nextInt(commandMessages.size())), commandRadius);
+                                    generator.nextInt(commandMessages.size())), commandRadius);
                 }
                 else if (commandMessagesOutputMode.equals("consistent")) {
                     // todo тут ты идешь анхуй

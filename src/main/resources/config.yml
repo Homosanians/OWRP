@@ -7,49 +7,59 @@ configVersion: 3
 # todo: cooldowns, mutes
 
 Expressions:
-  ): "улыбается"
-  )): "смеется"
-  (: "грустит"
-  ((: "сильно грустит"
-  :D: "катается по полу от смеха"
+  chatRadius: 100
+  message: "§6* {player} §7{message}"
+  # todo permission
+  list:
+    ): "улыбается"
+    )): "смеется"
+    (: "грустит"
+    ((: "сильно грустит"
+    :D: "катается по полу от смеха"
 
 Commands:
   me:
     enabled: true
-    messages: ["§6* {player} §7{message}"]
+    messages: ["§6* {playerName} §7{message}"]
     messagesOutputMode: "consistent"
     radius: 100
-    permission: "default"
+    permission: "owrp.commands.common"
   do:
     enabled: true
-    messages: ["§7* {message} §6({player})"]
+    messages: ["§7* {message} §6({playerName})"]
     messagesOutputMode: "consistent"
     radius: 100
-    permission: "default"
-  todo:
-    enabled: true
-    messages: ["пока не работает"]
-    messagesOutputMode: "consistent"
-    radius: 100
-    permission: "default"
+    permission: "owrp.commands.common"
+#  todo:
+#    enabled: true
+#    messages: ["пока не работает"]
+#    messagesOutputMode: "consistent"
+#    radius: 100
+#    permission: "owrp.commands.common"
   try:
     enabled: true
-    messages: ["§6* {player} §7{message} §c| Неудачно", "§6* {player} §7{message} §a| Удачно"]
+    messages: ["§6* {playerName} §7{message} §c| Неудачно", "§6* {playerDisplayName} §7{message} §a| Удачно"]
     messagesOutputMode: "random"
     radius: 100
-    permission: "default"
+    permission: "owrp.commands.common"
+#  b:
+#    enabled: true
+#    messages: ["§7{playerName}: (( §r{message} §7))"]
+#    messagesOutputMode: "consistent"
+#    radius: 100
+#    permission: "owrp.commands.common"
   ag:
     enabled: true
-    messages: ["§6{player}§7: §6{message}"]
+    messages: ["§6{playerName}§7: §6{message}"]
     messagesOutputMode: "consistent"
     radius: -2
-    permission: "owrp.announce.global"
+    permission: "owrp.commands.announce.global"
   al:
     enabled: true
-    messages: ["§6{player}§7: §6{message}"]
+    messages: ["§6{playerName}§7: §6{message}"]
     messagesOutputMode: "consistent"
     radius: 100
-    permission: "owrp.announce.local"
+    permission: "owrp.commands.announce.local"
 
 Strings:
   noPrivilege: "У вас нет привелегий для выполнения этой команды"
