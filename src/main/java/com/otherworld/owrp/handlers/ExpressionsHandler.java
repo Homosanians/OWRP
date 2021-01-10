@@ -1,29 +1,30 @@
 package com.otherworld.owrp.handlers;
 
 import com.otherworld.owrp.OWRP;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.List;
+import java.util.Objects;
 
 public class ExpressionsHandler {
-    private OWRP plugin;
+    private final OWRP plugin;
+    private final ConfigurationSection expressions;
 
     public ExpressionsHandler(OWRP plugin) {
         this.plugin = plugin;
+        this.expressions = plugin.getConfig().getConfigurationSection("Expressions");
     }
 
     public void handle(AsyncPlayerChatEvent event) {
-        List<String> commands = plugin.getConfig().getStringList("Commands");
         // command : message
-        for (String command : commands) {
-            System.out.println(command);
-            if (event.getMessage().equals(command)) {
-                execute(command);
+        System.out.println(event.getMessage());
+        for (String expression : expressions.getKeys(false)) {
+            System.out.println(expression);
+            System.out.println(expressions.getString(expression));
+            if (event.getMessage().equals(expression)) {
+                event.setMessage(Objects.requireNonNull(expressions.getString(expression)));
             }
         }
-    }
-
-    private void execute(String message) {
-        // /me message
+        event.setMessage("хуй");
     }
 }

@@ -4,6 +4,8 @@
 
 configVersion: 3
 
+# todo: cooldowns, mutes
+
 Expressions:
   ): "улыбается"
   )): "смеется"
@@ -14,40 +16,40 @@ Expressions:
 Commands:
   me:
     enabled: true
-    messages:
-      1: "{message}"
+    messages: ["§6* {player} §7{message}"]
     messagesOutputMode: "consistent"
     radius: 100
     permission: "default"
   do:
     enabled: true
-    messages:
-      1: "{message}"
+    messages: ["§7* {message} §6({player})"]
     messagesOutputMode: "consistent"
     radius: 100
     permission: "default"
   todo:
     enabled: true
-    messages:
-      1: "{message}"
+    messages: ["пока не работает"]
     messagesOutputMode: "consistent"
     radius: 100
     permission: "default"
   try:
     enabled: true
-    messages:
-      1: "{message}"
-      2: "{message}"
+    messages: ["§6* {player} §7{message} §c| Неудачно", "§6* {player} §7{message} §a| Удачно"]
     messagesOutputMode: "random"
     radius: 100
     permission: "default"
-  a:
+  ag:
     enabled: true
-    messages:
-      1: "{message}"
+    messages: ["§6{player}§7: §6{message}"]
     messagesOutputMode: "consistent"
     radius: -2
-    permission: "default"
+    permission: "owrp.announce.global"
+  al:
+    enabled: true
+    messages: ["§6{player}§7: §6{message}"]
+    messagesOutputMode: "consistent"
+    radius: 100
+    permission: "owrp.announce.local"
 
 Strings:
   noPrivilege: "У вас нет привелегий для выполнения этой команды"

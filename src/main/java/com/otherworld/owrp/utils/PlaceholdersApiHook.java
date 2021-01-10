@@ -1,4 +1,4 @@
 package com.otherworld.owrp.utils;
 
-public class PlaceholderApiHook {
+public class PlaceholdersApiHook {
 }

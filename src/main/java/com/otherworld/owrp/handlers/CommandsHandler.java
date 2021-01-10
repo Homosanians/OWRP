@@ -3,12 +3,10 @@ package com.otherworld.owrp.handlers;
 import com.otherworld.owrp.GenericCommandArgs;
 import com.otherworld.owrp.OWRP;
 import com.otherworld.owrp.commands.GenericCommand;
-import com.otherworld.owrp.commands.TestCommand;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandMap;
+import org.bukkit.configuration.ConfigurationSection;
 
-import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommandsHandler {
@@ -19,36 +17,46 @@ public class CommandsHandler {
     }
 
     public boolean registerCommands() {
-        List<String> commands = plugin.getConfig().getStringList("Commands");
         AtomicInteger commandsRegistered = new AtomicInteger();
 
-        commands.forEach((String commandName) -> {
+        ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
+
+        for(String commandName:commands.getKeys(false)){
             System.out.println(commandName);
 
-            boolean commandEnabled = plugin.getConfig().getBoolean(String.format("Commands.%s.enabled", commandName));
+            boolean commandEnabled = commands.getBoolean(String.format("%s.enabled", commandName));
             if (commandEnabled) {
-                List<String> commandMessages = plugin.getConfig().getStringList(String.format("Commands.%s.messages", commandName));
-                String commandMessagesOutputMode = plugin.getConfig().getString(String.format("Commands.%s.messagesOutputMode", commandName));
-                int commandRadius = plugin.getConfig().getInt(String.format("Commands.%s.radius", commandName));
-                String commandPermission = plugin.getConfig().getString(String.format("Commands.%s.permission", commandName));
+                System.out.println(commands.getInt(String.format("%s.radius", commandName)));
+                List<String> commandMessages = commands.getStringList(String.format("%s.messages", commandName));
+                String commandMessagesOutputMode = commands.getString(String.format("%s.messagesOutputMode", commandName));
+                int commandRadius = commands.getInt(String.format("%s.radius", commandName));
+                String commandPermission = commands.getString(String.format("%s.permission", commandName));
 
-                plugin.getCommand("try").setExecutor(
-                        new GenericCommand(plugin, new GenericCommandArgs(commandMessages.get(0), commandRadius)));
+                GenericCommandArgs commandArgs;
 
-                try {
-                    final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-
-                    bukkitCommandMap.setAccessible(true);
-                    CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
-
-                    commandMap.register("todo", new TestCommand("todo"));
-                } catch(Exception e) {
-                    e.printStackTrace();
+                assert commandMessagesOutputMode != null;
+                if (commandMessagesOutputMode.equals("random")) {
+                    commandArgs = new GenericCommandArgs(commandName,
+                            String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(
+                                    new Random().nextInt(commandMessages.size())), commandRadius);
                 }
+                else if (commandMessagesOutputMode.equals("consistent")) {
+                    // todo тут ты идешь анхуй
+                    commandArgs = new GenericCommandArgs(commandName,
+                            String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(0),
+                            commandRadius);
+                }
+                else {
+                    commandArgs = new GenericCommandArgs(commandName,
+                            String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(0),
+                            commandRadius);
+                }
+
+                new GenericCommand(plugin, commandArgs);
 
                 commandsRegistered.addAndGet(1);
             }
-        });
+        }
 
         System.out.println("Commands registered: " + commandsRegistered);
         return true;

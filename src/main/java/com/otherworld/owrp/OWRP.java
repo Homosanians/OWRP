@@ -4,14 +4,12 @@ import com.otherworld.owrp.commands.*;
 import com.otherworld.owrp.handlers.CommandsHandler;
 import com.otherworld.owrp.listeners.ExpressionsChatListener;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandMap;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Field;
 
 public final class OWRP extends JavaPlugin {
     @Override
@@ -26,8 +24,7 @@ public final class OWRP extends JavaPlugin {
 
         getCommand("owrp").setExecutor(new ReloadCommand(this));
 
-        new MyCommand(this);
-        //new CommandsHandler(this).registerCommands();
+        new CommandsHandler(this).registerCommands();
 
         Bukkit.getPluginManager().registerEvents(new ExpressionsChatListener(this), this);
     }

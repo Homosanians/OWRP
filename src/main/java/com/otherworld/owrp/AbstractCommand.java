@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  *
  * @author redsarow
  */
-public abstract class AMyCommand<T extends JavaPlugin> extends Command implements CommandExecutor, PluginIdentifiableCommand {
+public abstract class AbstractCommand<T extends JavaPlugin> extends Command implements CommandExecutor, PluginIdentifiableCommand {
 
     private static CommandMap commandMap;
 
@@ -40,7 +40,7 @@ public abstract class AMyCommand<T extends JavaPlugin> extends Command implement
      * @param plugin plugin responsible of the command.
      * @param name   name of the command.
      */
-    public AMyCommand(T plugin, String name) {
+    public AbstractCommand(T plugin, String name) {
         super(name);
 
         assert commandMap != null;
