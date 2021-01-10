@@ -42,12 +42,12 @@ Commands:
     messagesOutputMode: "random"
     radius: 100
     permission: "owrp.commands.common"
-#  b:
-#    enabled: true
-#    messages: ["§7{playerName}: (( §r{message} §7))"]
-#    messagesOutputMode: "consistent"
-#    radius: 100
-#    permission: "owrp.commands.common"
+  b:
+    enabled: true
+    messages: ["§7{playerName}: (( §r{message} §7))"]
+    messagesOutputMode: "consistent"
+    radius: 100
+    permission: "owrp.commands.common"
   ag:
     enabled: true
     messages: ["§6{playerName}§7: §6{message}"]

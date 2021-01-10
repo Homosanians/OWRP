@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommandsHandler {
     private final OWRP plugin;
-    private final Random generator = new Random(); // todo генерит одинаковые
 
     public CommandsHandler(OWRP plugin) {
         this.plugin = plugin;
@@ -21,13 +20,9 @@ public class CommandsHandler {
         AtomicInteger commandsRegistered = new AtomicInteger();
 
         ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
-        System.out.println(commands.getKeys(true).size());
         for(String commandName:commands.getKeys(false)){
-            System.out.println(commandName);
-
             boolean commandEnabled = commands.getBoolean(String.format("%s.enabled", commandName));
             if (commandEnabled) {
-                System.out.println(commands.getInt(String.format("%s.radius", commandName)));
                 List<String> commandMessages = commands.getStringList(String.format("%s.messages", commandName));
                 String commandMessagesOutputMode = commands.getString(String.format("%s.messagesOutputMode", commandName));
                 int commandRadius = commands.getInt(String.format("%s.radius", commandName));
@@ -35,11 +30,10 @@ public class CommandsHandler {
 
                 GenericCommandArgs commandArgs;
 
-                assert commandMessagesOutputMode != null;
                 if (commandMessagesOutputMode.equals("random")) {
+                    String message = commandMessages.get(new Random(Math.round(Math.random() * 100)).nextInt(commandMessages.size()));
                     commandArgs = new GenericCommandArgs(commandName,
-                            String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(
-                                    generator.nextInt(commandMessages.size())), commandRadius);
+                            String.format("/%s <сообщение>", commandName), commandPermission, message, commandRadius);
                 }
                 else if (commandMessagesOutputMode.equals("consistent")) {
                     // todo тут ты идешь анхуй
@@ -59,7 +53,7 @@ public class CommandsHandler {
             }
         }
 
-        System.out.println("Commands registered: " + commandsRegistered);
+        System.out.println("[OWRP] Commands registered: " + commandsRegistered);
         return true;
     }
 }
