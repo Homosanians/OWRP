@@ -30,18 +30,19 @@ Commands:
     messagesOutputMode: "consistent"
     radius: 100
     permission: "owrp.commands.common"
-#  todo:
-#    enabled: true
-#    messages: ["пока не работает"]
-#    messagesOutputMode: "consistent"
-#    radius: 100
-#    permission: "owrp.commands.common"
+  todo:
+    enabled: false
+    messages: ["пока не работает"]
+    messagesOutputMode: "consistent"
+    radius: 100
+    permission: "owrp.commands.common"
   try:
     enabled: true
     messages: ["§6* {playerName} §7{message} §c| Неудачно", "§6* {playerDisplayName} §7{message} §a| Удачно"]
     messagesOutputMode: "random"
     radius: 100
     permission: "owrp.commands.common"
+    # permissionDefault: true
   b:
     enabled: true
     messages: ["§7{playerName}: (( §r{message} §7))"]
