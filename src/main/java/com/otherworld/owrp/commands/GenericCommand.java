@@ -3,7 +3,6 @@ package com.otherworld.owrp.commands;
 import com.otherworld.owrp.AbstractCommand;
 import com.otherworld.owrp.GenericCommandArgs;
 import com.otherworld.owrp.OWRP;
-import com.otherworld.owrp.dependencies.DependencyManager;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,14 +10,15 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 public class GenericCommand extends AbstractCommand<OWRP> {
 
     private final OWRP plugin;
     private final GenericCommandArgs commandArgs;
-    private final DependencyManager dependencyManager;
+    // private final DependencyManager dependencyManager;
 
-    public GenericCommand(OWRP plugin, GenericCommandArgs commandArgs, DependencyManager dependencyManager) {
+    public GenericCommand(OWRP plugin, GenericCommandArgs commandArgs) {
 
         super(plugin, commandArgs.commandName);
 
@@ -31,7 +31,7 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
         this.plugin = plugin;
         this.commandArgs = commandArgs;
-        this.dependencyManager = dependencyManager;
+        // this.dependencyManager = plugin.getExact(DependencyManager.class);
     }
 
     @Override
@@ -54,16 +54,27 @@ public class GenericCommand extends AbstractCommand<OWRP> {
             return true;
         }
 
+        String commandMessage = "";
+
+        if (commandArgs.commandMessagesOutputMode.equals("random")) {
+            int randomMessageIndex = new Random().nextInt(commandArgs.messages.size());
+            commandMessage = commandArgs.messages.get(randomMessageIndex);
+        }
+        // todo послоедовательное выведения несокльких сообщений
+        else {
+            commandMessage = commandArgs.messages.get(0);
+        }
+
         Player player = (Player) sender;
         List<Player> addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
-        String content = commandArgs.message
+        String content = commandMessage
                 .replace("{playerName}", sender.getName())
                 .replace("{playerDisplayName}", ((Player) sender).getDisplayName())
                 .replace("{message}", String.join(" ", args));
 
-        if (sender instanceof Player) {
-            content = dependencyManager.placeholderApi.setPlaceholders((Player) sender, content);
-        }
+//        if (sender instanceof Player) {
+//            content = dependencyManager.placeholderApi.setPlaceholders((Player) sender, content);
+//        }
 
         for (Player addressee : addressees)
         {

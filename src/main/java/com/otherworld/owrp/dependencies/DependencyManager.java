@@ -16,5 +16,4 @@ public class DependencyManager {
             plugin.getLogger().log(Level.INFO, "PlaceholderAPI has successful hooked.");
         }
     }
-
 }

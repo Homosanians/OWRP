@@ -17,6 +17,15 @@ public class CommandsHandler {
         this.plugin = plugin;
     }
 
+    private String convertNullToEmptyString(Object param) {
+        if (param instanceof String) {
+            return param.toString();
+        }
+        else {
+            return "";
+        }
+    }
+
     public void registerCommands() {
         AtomicInteger commandsRegistered = new AtomicInteger();
 
@@ -25,29 +34,15 @@ public class CommandsHandler {
             boolean commandEnabled = commands.getBoolean(String.format("%s.enabled", commandName));
             if (commandEnabled) {
                 List<String> commandMessages = commands.getStringList(String.format("%s.messages", commandName));
-                String commandMessagesOutputMode = commands.getString(String.format("%s.messagesOutputMode", commandName));
                 int commandRadius = commands.getInt(String.format("%s.radius", commandName));
-                String commandPermission = commands.getString(String.format("%s.permission", commandName));
+                String commandPermission = convertNullToEmptyString(commands.getString(String.format("%s.permission", commandName)));
+                String commandMessagesOutputMode = convertNullToEmptyString(commands.getString(String.format("%s.messagesOutputMode", commandName)));
 
                 GenericCommandArgs commandArgs;
 
-                assert commandMessagesOutputMode != null;
-                if (commandMessagesOutputMode.equals("random")) {
-                    String message = commandMessages.get(new Random(Math.round(Math.random() * 100)).nextInt(commandMessages.size()));
-                    commandArgs = new GenericCommandArgs(commandName,
-                            String.format("/%s <сообщение>", commandName), commandPermission, message, commandRadius);
-                }
-                else if (commandMessagesOutputMode.equals("consistent")) {
-                    // todo тут ты идешь анхуй
-                    commandArgs = new GenericCommandArgs(commandName,
-                            String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(0),
-                            commandRadius);
-                }
-                else {
-                    commandArgs = new GenericCommandArgs(commandName,
-                            String.format("/%s <сообщение>", commandName), commandPermission, commandMessages.get(0),
-                            commandRadius);
-                }
+                commandArgs = new GenericCommandArgs(commandName,
+                        String.format("/%s <сообщение>", commandName), commandPermission, commandMessagesOutputMode,
+                        commandMessages, commandRadius);
 
                 new GenericCommand(plugin, commandArgs);
 
