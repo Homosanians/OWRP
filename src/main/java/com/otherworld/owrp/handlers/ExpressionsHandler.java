@@ -18,6 +18,7 @@ public class ExpressionsHandler {
         this.expressions = plugin.getConfig().getConfigurationSection("Expressions.list");
     }
 
+    // todo permission
     public void handle(AsyncPlayerChatEvent event) {
         for (String expression : expressions.getKeys(false)) {
             if (event.getMessage().trim().equals(expression.trim())) {

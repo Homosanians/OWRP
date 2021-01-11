@@ -22,8 +22,8 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
         setUsage(commandArgs.commandUsage);
 
-        //setPermission(commandArgs.commandPermission);
-        //setPermissionMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noPrivilege")));
+        setPermission(commandArgs.commandPermission);
+        setPermissionMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noPrivilege")));
 
         registerCommand();
 
@@ -32,7 +32,7 @@ public class GenericCommand extends AbstractCommand<OWRP> {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String commandName, String[] args) {
 
         // Completes execution of the command if it is not sent by a player.
         if (commandArgs.chatRadius != -2 && !(sender instanceof Player)) {
@@ -61,11 +61,10 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         String content = commandArgs.message
                 .replace("{playerName}", sender.getName())
                 .replace("{playerDisplayName}", ((Player) sender).getDisplayName())
-                .replace("{message}", args[0]);
+                .replace("{message}", String.join(" ", args));
 
         for (Player addressee : addressees)
         {
-            // <content> (<player>)
             addressee.sendMessage(content);
         }
 

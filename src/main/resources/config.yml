@@ -17,16 +17,17 @@ Expressions:
     ((: "сильно грустит"
     :D: "катается по полу от смеха"
 
+# todo hover message
 Commands:
   me:
     enabled: true
-    messages: ["§6* {playerName} §7{message}"]
+    messages: ["§6* {playerDisplayName} §7{message}"]
     messagesOutputMode: "consistent"
     radius: 100
     permission: "owrp.commands.common"
   do:
     enabled: true
-    messages: ["§7* {message} §6({playerName})"]
+    messages: ["§7* {message} §6({playerDisplayName})"]
     messagesOutputMode: "consistent"
     radius: 100
     permission: "owrp.commands.common"
@@ -38,7 +39,7 @@ Commands:
     permission: "owrp.commands.common"
   try:
     enabled: true
-    messages: ["§6* {playerName} §7{message} §c| Неудачно", "§6* {playerDisplayName} §7{message} §a| Удачно"]
+    messages: ["§6* {playerDisplayName} §7{message} §c| Неудачно", "§6* {playerDisplayName} §7{message} §a| Удачно"]
     messagesOutputMode: "random"
     radius: 100
     permission: "owrp.commands.common"
