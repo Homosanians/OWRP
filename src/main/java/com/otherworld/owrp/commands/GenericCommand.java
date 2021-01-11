@@ -66,7 +66,6 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         }
 
         Player player = (Player) sender;
-        List<Player> addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
         String content = commandMessage
                 .replace("{playerName}", sender.getName())
                 .replace("{playerDisplayName}", ((Player) sender).getDisplayName())
@@ -75,6 +74,18 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 //        if (sender instanceof Player) {
 //            content = dependencyManager.placeholderApi.setPlaceholders((Player) sender, content);
 //        }
+
+        List<Player> addressees;
+
+        if (commandArgs.chatRadius == -1) {
+            addressees = PlayerUtil.getAllPlayersInWorld(player.getWorld());
+        }
+        else if (commandArgs.chatRadius == -2) {
+            addressees = PlayerUtil.getAllPlayersInAllWorlds();
+        }
+        else {
+            addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
+        }
 
         for (Player addressee : addressees)
         {

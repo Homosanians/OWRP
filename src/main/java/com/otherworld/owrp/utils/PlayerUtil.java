@@ -1,6 +1,7 @@
 package com.otherworld.owrp.utils;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -16,5 +17,19 @@ public class PlayerUtil {
             }
         }
         return res;
+    }
+
+    public static List<Player> getAllPlayersInWorld(World world) {
+        final List<Player> res = new ArrayList<Player>();
+        for (final Player p : Bukkit.getServer().getOnlinePlayers()) {
+            if (p.getWorld() == world) {
+                res.add(p);
+            }
+        }
+        return res;
+    }
+
+    public static List<Player> getAllPlayersInAllWorlds() {
+        return new ArrayList<Player>(Bukkit.getServer().getOnlinePlayers());
     }
 }
