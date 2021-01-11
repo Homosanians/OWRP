@@ -3,6 +3,7 @@ package com.otherworld.owrp.commands;
 import com.otherworld.owrp.AbstractCommand;
 import com.otherworld.owrp.GenericCommandArgs;
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.dependencies.DependencyManager;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -15,8 +16,9 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
     private final OWRP plugin;
     private final GenericCommandArgs commandArgs;
+    private final DependencyManager dependencyManager;
 
-    public GenericCommand(OWRP plugin, GenericCommandArgs commandArgs) {
+    public GenericCommand(OWRP plugin, GenericCommandArgs commandArgs, DependencyManager dependencyManager) {
 
         super(plugin, commandArgs.commandName);
 
@@ -29,6 +31,7 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
         this.plugin = plugin;
         this.commandArgs = commandArgs;
+        this.dependencyManager = dependencyManager;
     }
 
     @Override
@@ -47,11 +50,6 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         }
 
         if (false) {
-            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noPrivilege")));
-            return true;
-        }
-
-        if (false) {
             sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.errorOccurred")));
             return true;
         }
@@ -62,6 +60,10 @@ public class GenericCommand extends AbstractCommand<OWRP> {
                 .replace("{playerName}", sender.getName())
                 .replace("{playerDisplayName}", ((Player) sender).getDisplayName())
                 .replace("{message}", String.join(" ", args));
+
+        if (sender instanceof Player) {
+            content = dependencyManager.placeholderApi.setPlaceholders((Player) sender, content);
+        }
 
         for (Player addressee : addressees)
         {

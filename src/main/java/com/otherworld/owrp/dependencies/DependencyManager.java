@@ -1,33 +1,20 @@
-//package com.otherworld.owrp.dependencies;
-//
-//import lombok.Getter;
-//
-//import java.util.logging.Level;
-//
-//public class DependencyManager {
-//
-//    @Getter private VaultHook vault;
-//    @Getter private PlaceholderAPIHook placeholderApi;
-//    @Getter private NametagEditHook nametagEdit;
-//
-//    public DependencyManager(Chatty chatty) {
-//        Configuration configuration = chatty.getExact(Configuration.class);
-//        JsonStorage jsonStorage = chatty.getExact(JsonStorage.class);
-//
-//        if (chatty.getServer().getPluginManager().isPluginEnabled("Vault")) {
-//            this.vault = new VaultHook();
-//            chatty.getLogger().log(Level.INFO, "Vault has successful hooked.");
-//        }
-//
-//        if (chatty.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-//            this.placeholderApi = new PlaceholderAPIHook();
-//            chatty.getLogger().log(Level.INFO, "PlaceholderAPI has successful hooked.");
-//        }
-//
-//        if (chatty.getServer().getPluginManager().isPluginEnabled("NametagEdit")) {
-//            this.nametagEdit = new NametagEditHook(configuration, jsonStorage);
-//            chatty.getLogger().log(Level.INFO, "NametagEdit has successful hooked.");
-//        }
-//    }
-//
-//}
+package com.otherworld.owrp.dependencies;
+
+import com.otherworld.owrp.OWRP;
+import lombok.Getter;
+
+import java.util.logging.Level;
+
+public class DependencyManager {
+
+    @Getter public PlaceholderApiHook placeholderApi;
+
+    public DependencyManager(OWRP plugin) {
+
+        if (plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            this.placeholderApi = new PlaceholderApiHook();
+            plugin.getLogger().log(Level.INFO, "PlaceholderAPI has successful hooked.");
+        }
+    }
+
+}

@@ -22,10 +22,13 @@ public class ExpressionsHandler {
     public void handle(AsyncPlayerChatEvent event) {
         for (String expression : expressions.getKeys(false)) {
             if (event.getMessage().trim().equals(expression.trim())) {
-                List<Player> addressees = PlayerUtil.getPlayersWithin(event.getPlayer(), plugin.getConfig().getInt("Expressions.chatRadius"));
+                List<Player> addressees = PlayerUtil.getPlayersWithin(event.getPlayer(),
+                        plugin.getConfig().getInt("Expressions.chatRadius"));
+
                 String message = Objects.requireNonNull(plugin.getConfig().getString("Expressions.message"))
                         .replace("{player}", event.getPlayer().getDisplayName())
                         .replace("{message}", Objects.requireNonNull(expressions.getString(expression)));
+
                 for (Player addressee : addressees)
                 {
                     addressee.sendMessage(message);

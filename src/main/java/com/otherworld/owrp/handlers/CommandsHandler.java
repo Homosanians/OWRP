@@ -8,6 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Level;
 
 public class CommandsHandler {
     private final OWRP plugin;
@@ -16,7 +17,7 @@ public class CommandsHandler {
         this.plugin = plugin;
     }
 
-    public boolean registerCommands() {
+    public void registerCommands() {
         AtomicInteger commandsRegistered = new AtomicInteger();
 
         ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
@@ -30,6 +31,7 @@ public class CommandsHandler {
 
                 GenericCommandArgs commandArgs;
 
+                assert commandMessagesOutputMode != null;
                 if (commandMessagesOutputMode.equals("random")) {
                     String message = commandMessages.get(new Random(Math.round(Math.random() * 100)).nextInt(commandMessages.size()));
                     commandArgs = new GenericCommandArgs(commandName,
@@ -53,7 +55,11 @@ public class CommandsHandler {
             }
         }
 
-        System.out.println("[OWRP] Commands registered: " + commandsRegistered);
-        return true;
+        if (commandsRegistered.intValue() == 0) {
+            plugin.getLogger().log(Level.WARNING, "Commands registered: " + commandsRegistered);
+        }
+        else {
+            plugin.getLogger().log(Level.INFO, "Commands registered: " + commandsRegistered);
+        }
     }
 }
