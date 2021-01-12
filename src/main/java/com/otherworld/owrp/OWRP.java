@@ -31,7 +31,7 @@ public final class OWRP extends JavaPlugin {
 
         handleConfigurationFile();
 
-        // register(DependencyManager.class, new DependencyManager(this));
+        register(DependencyManager.class, new DependencyManager(this));
 
         getCommand("owrp").setExecutor(new ReloadCommand(this));
 

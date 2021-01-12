@@ -3,6 +3,7 @@ package com.otherworld.owrp.commands;
 import com.otherworld.owrp.AbstractCommand;
 import com.otherworld.owrp.GenericCommandArgs;
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.dependencies.DependencyManager;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,7 +17,7 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
     private final OWRP plugin;
     private final GenericCommandArgs commandArgs;
-    // private final DependencyManager dependencyManager;
+    private final DependencyManager dependencyManager;
 
     public GenericCommand(OWRP plugin, GenericCommandArgs commandArgs) {
 
@@ -31,7 +32,7 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
         this.plugin = plugin;
         this.commandArgs = commandArgs;
-        // this.dependencyManager = plugin.getExact(DependencyManager.class);
+        this.dependencyManager = plugin.getExact(DependencyManager.class);
     }
 
     @Override
@@ -71,9 +72,11 @@ public class GenericCommand extends AbstractCommand<OWRP> {
                 .replace("{playerDisplayName}", ((Player) sender).getDisplayName())
                 .replace("{message}", String.join(" ", args));
 
-//        if (sender instanceof Player) {
-//            content = dependencyManager.placeholderApi.setPlaceholders((Player) sender, content);
-//        }
+        if (dependencyManager.placeholderApi != null) {
+            if (sender instanceof Player) {
+                content = dependencyManager.placeholderApi.setPlaceholders((Player) sender, content);
+            }
+        }
 
         List<Player> addressees;
 
