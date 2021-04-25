@@ -4,6 +4,7 @@ import com.otherworld.owrp.AbstractCommand;
 import com.otherworld.owrp.GenericCommandArgs;
 import com.otherworld.owrp.OWRP;
 import com.otherworld.owrp.dependencies.DependencyManager;
+import com.otherworld.owrp.utils.ChatColorUtil;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -40,18 +41,18 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
         // Completes execution of the command if it is not sent by a player.
         if (commandArgs.chatRadius != -2 && !(sender instanceof Player)) {
-            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noConsole")));
+            sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noConsole"))));
             return true;
         }
 
         // Check whether content arguments are present
         if (args.length == 0) {
-            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.noArgs")));
+            sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noArgs"))));
             return true;
         }
 
         if (false) {
-            sender.sendMessage(Objects.requireNonNull(plugin.getConfig().getString("Strings.errorOccurred")));
+            sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.errorOccurred"))));
             return true;
         }
 
@@ -92,7 +93,7 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
         for (Player addressee : addressees)
         {
-            addressee.sendMessage(content);
+            addressee.sendMessage(ChatColorUtil.formatColor(content));
         }
 
         return true;
