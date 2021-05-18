@@ -1,6 +1,7 @@
 package com.otherworld.owrp.handlers;
 
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.utils.ChatColorUtil;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public class ExpressionsHandler {
 
                 for (Player addressee : addressees)
                 {
-                    addressee.sendMessage(message);
+                    addressee.sendMessage(ChatColorUtil.formatColor(message));
                 }
                 event.setCancelled(true);
             }
