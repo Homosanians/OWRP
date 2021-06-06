@@ -1,11 +1,10 @@
 name: OWRP
 version: ${project.version}
 main: com.otherworld.owrp.OWRP
-api-version: 1.13
+api-version: "1.13"
 prefix: OW
-authors: [homosanians]
+author: homosanians
 description: Roleplay chat commands
-website: http://otherworldmc.ru
 softdepend: [PlaceholderAPI]
 
 commands:
