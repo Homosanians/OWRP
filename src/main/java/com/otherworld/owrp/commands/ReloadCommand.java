@@ -1,9 +1,11 @@
 package com.otherworld.owrp.commands;
 
 import com.otherworld.owrp.OWRP;
+import com.otherworld.owrp.dependencies.DependencyManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Objects;
 

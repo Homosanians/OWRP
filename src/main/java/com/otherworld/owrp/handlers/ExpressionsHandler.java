@@ -3,6 +3,7 @@ package com.otherworld.owrp.handlers;
 import com.otherworld.owrp.OWRP;
 import com.otherworld.owrp.utils.ChatColorUtil;
 import com.otherworld.owrp.utils.PlayerUtil;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -29,6 +30,8 @@ public class ExpressionsHandler {
                 String message = Objects.requireNonNull(plugin.getConfig().getString("Expressions.message"))
                         .replace("{player}", event.getPlayer().getDisplayName())
                         .replace("{message}", Objects.requireNonNull(expressions.getString(expression)));
+
+                message = PlaceholderAPI.setPlaceholders(event.getPlayer(), message);
 
                 for (Player addressee : addressees)
                 {

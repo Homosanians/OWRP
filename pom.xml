@@ -16,7 +16,6 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>http://otherworldmc.ru</url>
 
     <build>
         <defaultGoal>clean package</defaultGoal>
