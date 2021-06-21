@@ -3,7 +3,7 @@ version: ${project.version}
 main: com.otherworld.owrp.OWRP
 api-version: 1.16
 prefix: OWRP
-depend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI]
 authors: [homosanians]
 description: Roleplay chat commands
 
