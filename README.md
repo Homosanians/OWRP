@@ -46,4 +46,4 @@ You should not change `configVersion`.
 
 ## Contribute
 
-Feel free to open issues and pull requests
+Feel free to open issues or pull requests
