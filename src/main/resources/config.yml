@@ -16,8 +16,7 @@ configVersion: 4
 Expressions:
   chatRadius: 100
   message: "§6* {player} §7{message}"
-  permission: "owrp.expressions"
-  permissionDefault: true
+  permission: "owrp.common"
   list:
     ): "улыбается"
     )): "смеется"
@@ -31,32 +30,32 @@ Commands:
     enabled: true
     messages: ["§6* {playerDisplayName} §7{message}"]
     radius: 100
-    permission: "owrp.commands.common"
+    permission: "owrp.common"
     permissionDefault: true
   do:
     enabled: true
     messages: ["§7* {message} §6({playerDisplayName})"]
     radius: 100
-    permission: "owrp.commands.common"
+    permission: "owrp.common"
     permissionDefault: true
   todo:
     enabled: false
     messages: ["пока не работает"]
     radius: 100
-    permission: "owrp.commands.common"
+    permission: "owrp.common"
     permissionDefault: true
   try:
     enabled: true
     messages: ["§6* {playerDisplayName} §7{message} §c| Неудачно", "§6* {playerDisplayName} §7{message} §a| Удачно"]
     messagesOutputMode: "random"
     radius: 100
-    permission: "owrp.commands.common"
+    permission: "owrp.common"
     permissionDefault: true
   b:
     enabled: true
     messages: ["§7{playerName}: (( §r{message} §7))"]
     radius: 100
-    permission: "owrp.commands.common"
+    permission: "owrp.common"
     permissionDefault: true
   ag:
     enabled: true
