@@ -8,6 +8,7 @@ import com.otherworld.owrp.utils.ChatColorUtil;
 import com.otherworld.owrp.utils.PlayerUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,8 +39,18 @@ public class GenericCommand extends AbstractCommand<OWRP> {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, String commandName, String[] args) {
         try {
+            ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
+            assert commands != null;
+
+            List<String> commandMessages = commands.getStringList(String.format("%s.messages", commandName));
+
+            int chatRadius = commands.getInt(String.format("%s.radius", commandName));
+
+            String commandMessagesOutputMode = commands.getString(String.format("%s.messagesOutputMode", commandName));
+            assert commandMessagesOutputMode != null;
+
             // Completes execution of the command if it is not sent by a player.
-            if (commandArgs.chatRadius != -2 && !(sender instanceof Player)) {
+            if (chatRadius != -2 && !(sender instanceof Player)) {
                 sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noConsole"))));
                 return true;
             }
@@ -54,24 +65,24 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
             Player player = (Player) sender;
 
-            if (commandArgs.commandMessagesOutputMode.equals("random")) {
-                int randomMessageIndex = new Random().nextInt(commandArgs.messages.size());
+            if (commandMessagesOutputMode.equals("random")) {
+                int randomMessageIndex = new Random().nextInt(commandMessages.size());
                 messages.add(buildMessage(
-                        commandArgs.messages.get(randomMessageIndex),
+                        commandMessages.get(randomMessageIndex),
                         player,
                         args
                 ));
-            } else if (commandArgs.commandMessagesOutputMode.equals("single")) {
+            } else if (commandMessagesOutputMode.equals("single")) {
                 messages.add(buildMessage(
-                        commandArgs.messages.get(0),
+                        commandMessages.get(0),
                         player,
                         args
                 ));
             }
             else {
-                for (int i = 0; i < commandArgs.messages.size(); i++) {
+                for (String commandMessage : commandMessages) {
                     messages.add(buildMessage(
-                            commandArgs.messages.get(i),
+                            commandMessage,
                             player,
                             args
                     ));
@@ -80,12 +91,12 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
             List<Player> addressees;
 
-            if (commandArgs.chatRadius == -1) {
+            if (chatRadius == -1) {
                 addressees = PlayerUtil.getAllPlayersInWorld(player.getWorld());
-            } else if (commandArgs.chatRadius == -2) {
+            } else if (chatRadius == -2) {
                 addressees = PlayerUtil.getAllPlayersInAllWorlds();
             } else {
-                addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
+                addressees = PlayerUtil.getPlayersWithin(player, chatRadius);
             }
 
             for (Player addressee : addressees) {

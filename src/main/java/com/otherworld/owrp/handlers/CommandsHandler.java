@@ -34,13 +34,8 @@ public class CommandsHandler {
             boolean commandEnabled = commands.getBoolean(String.format("%s.enabled", commandName));
 
             if (commandEnabled) {
-                List<String> commandMessages = commands.getStringList(String.format("%s.messages", commandName));
-                int commandRadius = commands.getInt(String.format("%s.radius", commandName));
-
                 String commandPermission = convertNullToEmptyString(
                         commands.getString(String.format("%s.permission", commandName)));
-                String commandMessagesOutputMode = convertNullToEmptyString(
-                        commands.getString(String.format("%s.messagesOutputMode", commandName)));
 
                 GenericCommandArgs commandArgs;
 
@@ -48,9 +43,6 @@ public class CommandsHandler {
                 argsBuilder.SetName(commandName);
                 argsBuilder.SetUsage(String.format("/%s <сообщение>", commandName));
                 argsBuilder.SetPermission(commandPermission);
-                argsBuilder.SetMessagesOutputMode(commandMessagesOutputMode);
-                argsBuilder.SetMessages(commandMessages);
-                argsBuilder.SetChatRadius(commandRadius);
                 commandArgs = argsBuilder.Build();
 
                 new GenericCommand(plugin, commandArgs);
