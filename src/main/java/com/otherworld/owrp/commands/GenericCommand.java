@@ -11,10 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class GenericCommand extends AbstractCommand<OWRP> {
 
@@ -53,25 +50,32 @@ public class GenericCommand extends AbstractCommand<OWRP> {
                 return true;
             }
 
-            String commandMessage = "";
+            List<String> messages = new ArrayList<>();
+
+            Player player = (Player) sender;
 
             if (commandArgs.commandMessagesOutputMode.equals("random")) {
                 int randomMessageIndex = new Random().nextInt(commandArgs.messages.size());
-                commandMessage = commandArgs.messages.get(randomMessageIndex);
+                messages.add(buildMessage(
+                        commandArgs.messages.get(randomMessageIndex),
+                        player,
+                        args
+                ));
+            } else if (commandArgs.commandMessagesOutputMode.equals("single")) {
+                messages.add(buildMessage(
+                        commandArgs.messages.get(0),
+                        player,
+                        args
+                ));
             }
-            // todo послоедовательное выведения несокльких сообщений
             else {
-                commandMessage = commandArgs.messages.get(0);
-            }
-
-            Player player = (Player) sender;
-            String content = commandMessage
-                    .replace("{playerName}", sender.getName())
-                    .replace("{playerDisplayName}", (player.getDisplayName()))
-                    .replace("{message}", String.join(" ", args));
-
-            if (dependencyManager.placeholderApi != null) {
-                content = dependencyManager.placeholderApi.setPlaceholders(player, content);
+                for (int i = 0; i < commandArgs.messages.size(); i++) {
+                    messages.add(buildMessage(
+                            commandArgs.messages.get(i),
+                            player,
+                            args
+                    ));
+                }
             }
 
             List<Player> addressees;
@@ -85,7 +89,9 @@ public class GenericCommand extends AbstractCommand<OWRP> {
             }
 
             for (Player addressee : addressees) {
-                addressee.sendMessage(ChatColorUtil.formatColor(content));
+                for (String message : messages) {
+                    addressee.sendMessage(ChatColorUtil.formatColor(message));
+                }
             }
         } catch (Exception ex) {
             sender.sendMessage(ChatColorUtil.formatColor(
@@ -95,5 +101,12 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         }
 
         return true;
+    }
+
+    private String buildMessage(String message, Player player, String[] args) {
+        return message
+                .replace("{playerName}", player.getName())
+                .replace("{playerDisplayName}", (player.getDisplayName()))
+                .replace("{message}", String.join(" ", args));
     }
 }

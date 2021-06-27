@@ -5,13 +5,12 @@
 # >1 — normal
 
 # messagesOutputMode:
-# consistent — All messages from the list will be displayed in order.
+# single — First message from the list will be displayed.
 # random — A random message from the list will be displayed.
+# Otherwise all messages from the list will be displayed in order.
 
 # This variable should not be changed
 configVersion: 4
-
-# todo: cooldowns, mutes
 
 Expressions:
   chatRadius: 100
@@ -24,7 +23,6 @@ Expressions:
     ((: "сильно грустит"
     :D: "катается по полу от смеха"
 
-# todo hover message
 Commands:
   me:
     enabled: true
