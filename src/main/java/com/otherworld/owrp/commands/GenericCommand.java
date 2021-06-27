@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -39,60 +40,58 @@ public class GenericCommand extends AbstractCommand<OWRP> {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command command, String commandName, String[] args) {
+        try {
+            // Completes execution of the command if it is not sent by a player.
+            if (commandArgs.chatRadius != -2 && !(sender instanceof Player)) {
+                sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noConsole"))));
+                return true;
+            }
 
-        // Completes execution of the command if it is not sent by a player.
-        if (commandArgs.chatRadius != -2 && !(sender instanceof Player)) {
-            sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noConsole"))));
-            return true;
-        }
+            // Check whether content arguments are present
+            if (args.length == 0) {
+                sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noArgs"))));
+                return true;
+            }
 
-        // Check whether content arguments are present
-        if (args.length == 0) {
-            sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.noArgs"))));
-            return true;
-        }
+            String commandMessage = "";
 
-        if (false) {
-            sender.sendMessage(ChatColorUtil.formatColor(Objects.requireNonNull(plugin.getConfig().getString("Strings.errorOccurred"))));
-            return true;
-        }
+            if (commandArgs.commandMessagesOutputMode.equals("random")) {
+                int randomMessageIndex = new Random().nextInt(commandArgs.messages.size());
+                commandMessage = commandArgs.messages.get(randomMessageIndex);
+            }
+            // todo послоедовательное выведения несокльких сообщений
+            else {
+                commandMessage = commandArgs.messages.get(0);
+            }
 
-        String commandMessage = "";
+            Player player = (Player) sender;
+            String content = commandMessage
+                    .replace("{playerName}", sender.getName())
+                    .replace("{playerDisplayName}", (player.getDisplayName()))
+                    .replace("{message}", String.join(" ", args));
 
-        if (commandArgs.commandMessagesOutputMode.equals("random")) {
-            int randomMessageIndex = new Random().nextInt(commandArgs.messages.size());
-            commandMessage = commandArgs.messages.get(randomMessageIndex);
-        }
-        // todo послоедовательное выведения несокльких сообщений
-        else {
-            commandMessage = commandArgs.messages.get(0);
-        }
+            if (dependencyManager.placeholderApi != null) {
+                content = dependencyManager.placeholderApi.setPlaceholders(player, content);
+            }
 
-        Player player = (Player) sender;
-        String content = commandMessage
-                .replace("{playerName}", sender.getName())
-                .replace("{playerDisplayName}", (player.getDisplayName()))
-                .replace("{message}", String.join(" ", args));
+            List<Player> addressees;
 
-        if (dependencyManager.placeholderApi != null) {
-            content = dependencyManager.placeholderApi.setPlaceholders(player, content);
-        }
+            if (commandArgs.chatRadius == -1) {
+                addressees = PlayerUtil.getAllPlayersInWorld(player.getWorld());
+            } else if (commandArgs.chatRadius == -2) {
+                addressees = PlayerUtil.getAllPlayersInAllWorlds();
+            } else {
+                addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
+            }
 
-        List<Player> addressees;
+            for (Player addressee : addressees) {
+                addressee.sendMessage(ChatColorUtil.formatColor(content));
+            }
+        } catch (Exception ex) {
+            sender.sendMessage(ChatColorUtil.formatColor(
+                    Objects.requireNonNull(plugin.getConfig().getString("Strings.errorOccurred"))));
 
-        if (commandArgs.chatRadius == -1) {
-            addressees = PlayerUtil.getAllPlayersInWorld(player.getWorld());
-        }
-        else if (commandArgs.chatRadius == -2) {
-            addressees = PlayerUtil.getAllPlayersInAllWorlds();
-        }
-        else {
-            addressees = PlayerUtil.getPlayersWithin(player, commandArgs.chatRadius);
-        }
-
-        for (Player addressee : addressees)
-        {
-            addressee.sendMessage(ChatColorUtil.formatColor(content));
+            ex.printStackTrace();
         }
 
         return true;
