@@ -1,6 +1,7 @@
 package com.otherworld.owrp.handlers;
 
 import com.otherworld.owrp.GenericCommandArgs;
+import com.otherworld.owrp.GenericCommandArgsBuilder;
 import com.otherworld.owrp.OWRP;
 import com.otherworld.owrp.commands.GenericCommand;
 import org.bukkit.configuration.ConfigurationSection;
@@ -43,9 +44,14 @@ public class CommandsHandler {
 
                 GenericCommandArgs commandArgs;
 
-                commandArgs = new GenericCommandArgs(commandName,
-                        String.format("/%s <сообщение>", commandName), commandPermission, commandMessagesOutputMode,
-                        commandMessages, commandRadius);
+                GenericCommandArgsBuilder argsBuilder = new GenericCommandArgsBuilder();
+                argsBuilder.SetName(commandName);
+                argsBuilder.SetUsage(String.format("/%s <сообщение>", commandName));
+                argsBuilder.SetPermission(commandPermission);
+                argsBuilder.SetMessagesOutputMode(commandMessagesOutputMode);
+                argsBuilder.SetMessages(commandMessages);
+                argsBuilder.SetChatRadius(commandRadius);
+                commandArgs = argsBuilder.Build();
 
                 new GenericCommand(plugin, commandArgs);
 
