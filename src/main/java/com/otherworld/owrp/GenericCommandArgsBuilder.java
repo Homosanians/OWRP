@@ -5,6 +5,10 @@ import java.util.List;
 public class GenericCommandArgsBuilder {
     public GenericCommandArgs args;
 
+    public GenericCommandArgsBuilder() {
+        args = new GenericCommandArgs();
+    }
+
     public void SetChatRadius(int value) {
         args.chatRadius = value;
     }

@@ -55,6 +55,7 @@ Commands:
     enabled: true
     messages: ["§7{playerName}: (( §r{message} §7))"]
     radius: 100
+    aliases: ['ooc']
     permission: "owrp.common"
     permissionDefault: true
   ag:

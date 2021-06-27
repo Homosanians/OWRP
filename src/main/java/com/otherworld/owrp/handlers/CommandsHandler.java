@@ -56,6 +56,13 @@ public class CommandsHandler {
                 new GenericCommand(plugin, commandArgs);
 
                 commandsRegistered.addAndGet(1);
+
+                for(String aliase:commands.getStringList(String.format("%s.aliases", commandName))) {
+                    argsBuilder.SetName(aliase);
+                    commandArgs = argsBuilder.Build();
+                    new GenericCommand(plugin, commandArgs);
+                    commandsRegistered.addAndGet(1);
+                }
             }
         }
 
