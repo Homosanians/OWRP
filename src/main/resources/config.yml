@@ -1,15 +1,23 @@
-# Radius
-# -2 - all worlds, -1 world of the sender, 0 - none, >1 - normal
-# messagesOutputMode. Two types: consistent, random.
+# radius:
+# -2 — all worlds
+# -1 — world of the sender
+# 0 — none
+# >1 — normal
 
-configVersion: 3
+# messagesOutputMode:
+# consistent — All messages from the list will be displayed in order.
+# random — A random message from the list will be displayed.
+
+# This variable should not be changed
+configVersion: 4
 
 # todo: cooldowns, mutes
 
 Expressions:
   chatRadius: 100
   message: "§6* {player} §7{message}"
-  # todo permission
+  permission: "owrp.expressions"
+  permissionDefault: true
   list:
     ): "улыбается"
     )): "смеется"

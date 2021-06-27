@@ -6,7 +6,6 @@ import com.otherworld.owrp.commands.GenericCommand;
 import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
@@ -20,8 +19,7 @@ public class CommandsHandler {
     private String convertNullToEmptyString(Object param) {
         if (param instanceof String) {
             return param.toString();
-        }
-        else {
+        } else {
             return "";
         }
     }
@@ -30,13 +28,18 @@ public class CommandsHandler {
         AtomicInteger commandsRegistered = new AtomicInteger();
 
         ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
+
         for(String commandName:commands.getKeys(false)){
             boolean commandEnabled = commands.getBoolean(String.format("%s.enabled", commandName));
+
             if (commandEnabled) {
                 List<String> commandMessages = commands.getStringList(String.format("%s.messages", commandName));
                 int commandRadius = commands.getInt(String.format("%s.radius", commandName));
-                String commandPermission = convertNullToEmptyString(commands.getString(String.format("%s.permission", commandName)));
-                String commandMessagesOutputMode = convertNullToEmptyString(commands.getString(String.format("%s.messagesOutputMode", commandName)));
+
+                String commandPermission = convertNullToEmptyString(
+                        commands.getString(String.format("%s.permission", commandName)));
+                String commandMessagesOutputMode = convertNullToEmptyString(
+                        commands.getString(String.format("%s.messagesOutputMode", commandName)));
 
                 GenericCommandArgs commandArgs;
 

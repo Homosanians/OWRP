@@ -12,8 +12,10 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public final class OWRP extends JavaPlugin {
 
@@ -50,9 +52,7 @@ public final class OWRP extends JavaPlugin {
 
         Reader defaultStream = null;
         YamlConfiguration defaultConfig = null;
-        try {
-            defaultStream = new InputStreamReader(getResource("config.yml"), "UTF8");
-        } catch (UnsupportedEncodingException ex) { }
+        defaultStream = new InputStreamReader(getResource("config.yml"), StandardCharsets.UTF_8);
         if (defaultStream != null) {
             defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
         }

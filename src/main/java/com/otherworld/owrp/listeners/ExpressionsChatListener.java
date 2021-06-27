@@ -8,17 +8,14 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class ExpressionsChatListener implements Listener {
-    private OWRP plugin;
-    private ExpressionsHandler emoteHandler;
+    private final ExpressionsHandler expressionsHandler;
 
     public ExpressionsChatListener(OWRP plugin) {
-        this.plugin = plugin;
-
-        emoteHandler = new ExpressionsHandler(plugin);
+        expressionsHandler = new ExpressionsHandler(plugin);
     }
 
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerChat(AsyncPlayerChatEvent event) {
-        emoteHandler.handle(event);
+        expressionsHandler.handle(event);
     }
 }
