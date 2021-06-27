@@ -16,13 +16,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
 
 public final class OWRP extends JavaPlugin {
 
     private final Map<Class<?>, Object> dependenciesMap = new HashMap<>();
 
     private static OWRP instance;
-
     public static OWRP instance() {
         return OWRP.instance;
     }
@@ -52,17 +52,27 @@ public final class OWRP extends JavaPlugin {
 
         Reader defaultStream = null;
         YamlConfiguration defaultConfig = null;
-        defaultStream = new InputStreamReader(getResource("config.yml"), StandardCharsets.UTF_8);
-        if (defaultStream != null) {
-            defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
-        }
+        defaultStream = new InputStreamReader(Objects.requireNonNull(getResource("config.yml")), StandardCharsets.UTF_8);
+        defaultConfig = YamlConfiguration.loadConfiguration(defaultStream);
 
-        Integer actualVersion = defaultConfig.getInt("configVersion");
-        Integer loadedVersion = getConfig().getInt("configVersion");
+        int actualVersion = defaultConfig.getInt("configVersion");
+        int loadedVersion = getConfig().getInt("configVersion");
 
         if (actualVersion > loadedVersion) {
             File file = new File(getDataFolder(), "config.yml");
-            file.renameTo(new File(getDataFolder(), "config.yml.old"));
+            boolean succeed = file.renameTo(new File(getDataFolder(), "config.yml.old"));
+
+            if (!succeed) {
+                getLogger().log(Level.WARNING, "Cannot rename config.yml to config.yml.old. " +
+                        "The file name has not been changed. However, the current config is outdated.");
+            } else {
+                boolean deleted = file.delete();
+
+                if (!deleted) {
+                    getLogger().log(Level.WARNING, "Cannot delete config.yml after making copy. " +
+                            "The current config file were not deleted, however, it is outdated.");
+                }
+            }
         }
     }
 

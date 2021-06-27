@@ -17,8 +17,6 @@ import java.util.*;
 public class GenericCommand extends AbstractCommand<OWRP> {
 
     private final OWRP plugin;
-    private final GenericCommandArgs commandArgs;
-    private final DependencyManager dependencyManager;
 
     public GenericCommand(OWRP plugin, GenericCommandArgs commandArgs) {
 
@@ -32,12 +30,10 @@ public class GenericCommand extends AbstractCommand<OWRP> {
         registerCommand();
 
         this.plugin = plugin;
-        this.commandArgs = commandArgs;
-        this.dependencyManager = plugin.getExact(DependencyManager.class);
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, String commandName, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandName, String[] args) {
         try {
             ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
             assert commands != null;

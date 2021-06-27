@@ -6,7 +6,6 @@ import com.otherworld.owrp.OWRP;
 import com.otherworld.owrp.commands.GenericCommand;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 
@@ -29,8 +28,9 @@ public class CommandsHandler {
         AtomicInteger commandsRegistered = new AtomicInteger();
 
         ConfigurationSection commands = plugin.getConfig().getConfigurationSection("Commands");
+        assert commands != null;
 
-        for(String commandName:commands.getKeys(false)){
+        for(String commandName : commands.getKeys(false)){
             boolean commandEnabled = commands.getBoolean(String.format("%s.enabled", commandName));
 
             if (commandEnabled) {
