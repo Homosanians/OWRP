@@ -25,7 +25,7 @@ Plugin for enhancing role-playing constituent of your server. Minimalism, creati
 - owrp.reload - allows you to reload the configuration
 
 #### Configuration
-You should not change `configVersion`.
+You should not change `configVersion`
 
 ## Requirements
 
